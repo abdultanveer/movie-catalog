@@ -3,6 +3,7 @@ package com.abdul.movie.catalog
 import com.abdul.movie.catalog.model.CatalogItem
 import com.abdul.movie.catalog.model.Movie
 import com.abdul.movie.catalog.model.Rating
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -15,11 +16,15 @@ import java.util.stream.Collectors
 
 @RestController
 @RequestMapping("/catalog")
-class MovieCatalogResource {
+class MovieCatalogResource(
+    private val restTemplate: RestTemplate
+) {
+
+
+
     @GetMapping("/{userId}")
     fun getCatalog(@PathVariable("userId") userId: String?): List<CatalogItem> {
 
-        val restTemplate = RestTemplate()
 
 //        val ratings: List<Rating> = Arrays.asList<Rating>(
 //            //mocking call to ratings ms
@@ -35,7 +40,7 @@ class MovieCatalogResource {
         return ratingsBag.stream() //putting the list of items [emptying the bag on a] conveyor belt
             .map(Function { rating: Rating? ->
 
-                val movie: Movie? = restTemplate.getForObject(
+                val movie: Movie? = restTemplate?.getForObject(
                     "http://localhost:8083/movies/abdul",
                     Movie::class.java
                 )
