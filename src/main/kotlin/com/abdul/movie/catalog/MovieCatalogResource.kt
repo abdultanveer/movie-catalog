@@ -17,7 +17,8 @@ class MovieCatalogResource {
     @GetMapping("/{userId}")
     fun getCatalog(@PathVariable("userId") userId: String?): List<CatalogItem> {
 
-        val ratings: List<Rating> = Arrays.asList<Rating>( //mocking call to ratings ms
+        val ratings: List<Rating> = Arrays.asList<Rating>(
+            //mocking call to ratings ms
             Rating("movieOne", 1),
             Rating("movieTwo", 2),
             Rating("movieThree", 3)
@@ -26,9 +27,9 @@ class MovieCatalogResource {
         return ratings.stream() //putting the list of items [emptying the bag on a] conveyor belt
             .map(Function { rating: Rating? ->
                 CatalogItem(
-                    "movieOne",
-                    "description",
-                    1
+                    rating!!.movieId,
+                    "description"+rating.movieId,
+                    rating.rating
                 )
             }) //converting each rating item moving on the conveyor belt TO  catalogitem
             .collect(Collectors.toList()) //after all the items have been converted put it back into the bag[list]
