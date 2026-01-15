@@ -1,3 +1,14 @@
 package com.abdul.movie.catalog.model
 
-data class Rating(var movieId: String, var rating: Int)
+class Rating {
+    var movieId: String? = null
+    var rating: Int = 0
+
+    constructor()
+
+
+    constructor(movieId: String?, rating: Int) : super() {
+        this.movieId = movieId
+        this.rating = rating
+    }
+}
