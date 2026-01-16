@@ -40,7 +40,7 @@ class MovieCatalogResource(
             Rating::class.java
         )
         val movie: Movie? = restTemplate?.getForObject(
-                   "http://localhost:8083/movies/abdul",
+            "http://movie-info-service/movies/abdul",
                    Movie::class.java
                )
 
